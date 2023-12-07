@@ -6,7 +6,7 @@ export default function NewTodoPage() {
   const taskNameRef = useRef();
   return (
     <>
-      <div className="w-[398px]">
+      <div className="jusi flex w-[398px] flex-col">
         <div className="relative mb-10 flex w-full items-center justify-center">
           <Link to={"/"} className="absolute left-0 top-1/2 -translate-y-1/2">
             <svg
@@ -33,12 +33,13 @@ export default function NewTodoPage() {
               />
             </svg>
           </Link>
-          <h1 className="text-H1 text-center font-medium">Add New Task</h1>
+          <h1 className="text-center text-H1 font-medium">Add New Task</h1>
         </div>
+        <h2 className="text-H2 font-medium">Task Name</h2>
         <div
-          className={`bg-WH mb-5 flex h-[60px] w-[398px] cursor-text items-center justify-between rounded-full ${
+          className={`mb-5 flex h-[60px] w-[398px] cursor-text items-center justify-between rounded-full bg-WH ${
             taskNameInputFocused
-              ? "border-BLK border-1"
+              ? "border-1 border-BLK"
               : "border-1 border-STROKE"
           }`}
           onClick={() => {
@@ -59,6 +60,10 @@ export default function NewTodoPage() {
               setTaskNameInputFocused((prev) => !prev);
             }}
           />
+        </div>
+
+        <div className="flex h-[60px] w-[192px] cursor-pointer items-center justify-center self-center rounded-full bg-PRIMARY text-PRIMARYBUTTON text-WH">
+          Save Task
         </div>
       </div>
     </>

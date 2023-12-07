@@ -25,7 +25,9 @@ export default {
       },
       fontSize: {
         H1: "24px",
+        H2: "18px",
         RADIONUMBER: "14px",
+        RADIOTEXT: "12px",
         PRIMARYBUTTON: "18px",
       },
       // fontWeight: {

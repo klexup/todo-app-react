@@ -9,8 +9,8 @@ export default function MainPage() {
   return (
     <>
       <div
-        className={`bg-WH mb-5 flex h-[60px] w-[398px] cursor-text items-center justify-between rounded-full ${
-          searchFocused ? "border-BLK border-1" : "border-1 border-STROKE"
+        className={`mb-5 flex h-[60px] w-[398px] cursor-text items-center justify-between rounded-full bg-WH ${
+          searchFocused ? "border-1 border-BLK" : "border-1 border-STROKE"
         }`}
         onClick={() => {
           searchRef.current.focus();
@@ -83,7 +83,7 @@ export default function MainPage() {
       </div>
 
       <Link
-        className="bg-PRIMARY text-WH text-PRIMARYBUTTON flex h-[60px] w-[192px] cursor-pointer items-center justify-center rounded-full"
+        className="flex h-[60px] w-[192px] cursor-pointer items-center justify-center rounded-full bg-PRIMARY text-PRIMARYBUTTON text-WH"
         to={"newTodo"}
       >
         <svg
