@@ -55,22 +55,23 @@ export default function SortRadioList() {
 }
 
 function RadioListItem({ label, value, sortValue, setSortValue }) {
+  const handleChange = () => {
+    setSortValue(value);
+  };
+
   return (
-    <>
-      <div
-        className="flex justify-between border-b-1 border-STROKE p-1"
-        onClick={() => {
-          setSortValue(value);
-        }}
-      >
-        {label}
-        <input
-          type="radio"
-          name="sort"
-          value={value}
-          checked={sortValue === value}
-        />
-      </div>
-    </>
+    <div
+      className="flex justify-between border-b-1 border-STROKE p-1"
+      onClick={handleChange}
+    >
+      {label}
+      <input
+        type="radio"
+        name="sort"
+        value={value}
+        checked={sortValue === value}
+        onChange={handleChange}
+      />
+    </div>
   );
 }

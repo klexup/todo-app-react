@@ -58,7 +58,11 @@ export default function MainPage() {
           viewBox="0 0 36 36"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="mr-3 cursor-pointer"
+          className="mr-3 cursor-pointer transition-all hover:scale-110"
+          onClick={(e) => {
+            e.stopPropagation();
+            // will be button to activate the search
+          }}
         >
           <circle cx="18" cy="18" r="18" fill="#0D99FF" fillOpacity="0.1" />
           <path
@@ -83,7 +87,7 @@ export default function MainPage() {
       </div>
 
       <Link
-        className="flex h-[60px] w-[192px] cursor-pointer items-center justify-center rounded-full bg-PRIMARY text-PRIMARYBUTTON text-WH"
+        className="flex h-[60px] w-[192px] cursor-pointer items-center justify-center rounded-full bg-PRIMARY text-PRIMARYBUTTON text-WH transition-all hover:scale-110"
         to={"newTodo"}
       >
         <svg

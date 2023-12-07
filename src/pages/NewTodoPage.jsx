@@ -1,5 +1,7 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import SelectPriorityLevel from "../components/SelectPriorityLevel";
+import SelectComplexityLevel from "../components/SelectComplexityLevel";
 
 export default function NewTodoPage() {
   const [taskNameInputFocused, setTaskNameInputFocused] = useState(false);
@@ -8,7 +10,10 @@ export default function NewTodoPage() {
     <>
       <div className="jusi flex w-[398px] flex-col">
         <div className="relative mb-10 flex w-full items-center justify-center">
-          <Link to={"/"} className="absolute left-0 top-1/2 -translate-y-1/2">
+          <Link
+            to={"/"}
+            className="absolute left-0 top-1/2 -translate-y-1/2 transition-all hover:scale-110"
+          >
             <svg
               width="44"
               height="44"
@@ -62,7 +67,10 @@ export default function NewTodoPage() {
           />
         </div>
 
-        <div className="flex h-[60px] w-[192px] cursor-pointer items-center justify-center self-center rounded-full bg-PRIMARY text-PRIMARYBUTTON text-WH">
+        <SelectPriorityLevel />
+        <SelectComplexityLevel />
+
+        <div className="mt-5 flex h-[60px] w-[192px] cursor-pointer items-center justify-center self-center rounded-full bg-PRIMARY text-PRIMARYBUTTON text-WH transition-all hover:scale-110">
           Save Task
         </div>
       </div>
