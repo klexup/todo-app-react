@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function SelectPriorityLevel() {
-  const [priorityValue, setPriorityValue] = useState(null);
+  const [priorityValue, setPriorityValue] = useState(0);
   return (
     <>
       <h2 className="text-H2 font-medium">Select Priority Level</h2>
@@ -63,6 +63,10 @@ export default function SelectPriorityLevel() {
 
 function PriorityLevelItem({ priorityLevel, priorityValue, setPriorityValue }) {
   const handleClick = () => {
+    if (priorityLevel === priorityValue) {
+      setPriorityValue(0);
+      return;
+    }
     setPriorityValue(priorityLevel);
   };
   return (

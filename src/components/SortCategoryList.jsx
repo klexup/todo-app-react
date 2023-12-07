@@ -7,7 +7,9 @@ export default function SortCategoryList() {
         className="text-RADIOTEXT flex flex-col gap-2 p-3"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-center">None Found</div>
+        <div className="flex items-center justify-center">
+          No Categories Found
+        </div>
       </div>
     </>
   );

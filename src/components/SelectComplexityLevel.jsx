@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function SelectComplexityLevel() {
-  const [complexityValue, setComplexityValue] = useState(null);
+  const [complexityValue, setComplexityValue] = useState(0);
 
   return (
     <>
@@ -68,6 +68,10 @@ function ComplexityLevelItem({
   setComplexityValue,
 }) {
   const handleClick = () => {
+    if (complexityLevel === complexityValue) {
+      setComplexityValue(0);
+      return;
+    }
     setComplexityValue(complexityLevel);
   };
   return (

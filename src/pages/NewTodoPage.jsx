@@ -2,6 +2,10 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import SelectPriorityLevel from "../components/SelectPriorityLevel";
 import SelectComplexityLevel from "../components/SelectComplexityLevel";
+import SelectDueDate from "../components/SelectDueDate";
+import SelectTime from "../components/SelectTime";
+import SubtaskInput from "../components/SubtaskInput";
+import TagsInput from "../components/TagsInput";
 
 export default function NewTodoPage() {
   const [taskNameInputFocused, setTaskNameInputFocused] = useState(false);
@@ -69,7 +73,12 @@ export default function NewTodoPage() {
 
         <SelectPriorityLevel />
         <SelectComplexityLevel />
-
+        <div className="mt-5 flex justify-between">
+          <SelectDueDate />
+          <SelectTime />
+        </div>
+        <SubtaskInput />
+        <TagsInput />
         <div className="mt-5 flex h-[60px] w-[192px] cursor-pointer items-center justify-center self-center rounded-full bg-PRIMARY text-PRIMARYBUTTON text-WH transition-all hover:scale-110">
           Save Task
         </div>
