@@ -1,78 +1,42 @@
-import { useState } from "react";
-
-export default function SelectComplexityLevel() {
-  const [complexityValue, setComplexityValue] = useState(0);
-
+export default function SelectComplexityLevel({
+  complexityLevel,
+  setCurrentTodo,
+}) {
+  const complexityItemProps = { complexityLevel, setCurrentTodo };
+  const values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   return (
     <>
       <h2 className="text-H2 font-medium">Select Complexity Level</h2>
       <div className="flex justify-between pb-1 pt-1">
-        <ComplexityLevelItem
-          complexityLevel={1}
-          complexityValue={complexityValue}
-          setComplexityValue={setComplexityValue}
-        />
-        <ComplexityLevelItem
-          complexityLevel={2}
-          complexityValue={complexityValue}
-          setComplexityValue={setComplexityValue}
-        />
-        <ComplexityLevelItem
-          complexityLevel={3}
-          complexityValue={complexityValue}
-          setComplexityValue={setComplexityValue}
-        />
-        <ComplexityLevelItem
-          complexityLevel={4}
-          complexityValue={complexityValue}
-          setComplexityValue={setComplexityValue}
-        />
-        <ComplexityLevelItem
-          complexityLevel={5}
-          complexityValue={complexityValue}
-          setComplexityValue={setComplexityValue}
-        />
-        <ComplexityLevelItem
-          complexityLevel={6}
-          complexityValue={complexityValue}
-          setComplexityValue={setComplexityValue}
-        />
-        <ComplexityLevelItem
-          complexityLevel={7}
-          complexityValue={complexityValue}
-          setComplexityValue={setComplexityValue}
-        />
-        <ComplexityLevelItem
-          complexityLevel={8}
-          complexityValue={complexityValue}
-          setComplexityValue={setComplexityValue}
-        />
-        <ComplexityLevelItem
-          complexityLevel={9}
-          complexityValue={complexityValue}
-          setComplexityValue={setComplexityValue}
-        />
-        <ComplexityLevelItem
-          complexityLevel={10}
-          complexityValue={complexityValue}
-          setComplexityValue={setComplexityValue}
-        />
+        {values.map((value, index) => {
+          return (
+            <ComplexityLevelItem
+              complexityValue={value}
+              {...complexityItemProps}
+              key={index}
+            />
+          );
+        })}
       </div>
     </>
   );
 }
 
 function ComplexityLevelItem({
-  complexityLevel,
   complexityValue,
-  setComplexityValue,
+  complexityLevel,
+  setCurrentTodo,
 }) {
   const handleClick = () => {
     if (complexityLevel === complexityValue) {
-      setComplexityValue(0);
-      return;
+      setCurrentTodo((prev) => {
+        return { ...prev, complexityLevel: 0 };
+      });
+    } else {
+      setCurrentTodo((prev) => {
+        return { ...prev, complexityLevel: complexityValue };
+      });
     }
-    setComplexityValue(complexityLevel);
   };
   return (
     <>
@@ -84,7 +48,7 @@ function ComplexityLevelItem({
         } p-1 text-RADIONUMBER`}
         onClick={() => handleClick()}
       >
-        {complexityLevel}
+        {complexityValue}
       </div>
     </>
   );

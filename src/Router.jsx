@@ -30,7 +30,7 @@ export default function Router() {
 function MainContainer({ children }) {
   return (
     <>
-      <div className="font-inter mt-24 flex w-full flex-col items-center justify-center">
+      <div className="mt-24 flex w-full flex-col items-center justify-center font-inter">
         {children}
         <Outlet />
       </div>

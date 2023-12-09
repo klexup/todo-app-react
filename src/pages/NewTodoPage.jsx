@@ -1,15 +1,35 @@
-import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import SelectPriorityLevel from "../components/SelectPriorityLevel";
 import SelectComplexityLevel from "../components/SelectComplexityLevel";
 import SelectDueDate from "../components/SelectDueDate";
 import SelectTime from "../components/SelectTime";
 import SubtaskInput from "../components/SubtaskInput";
 import TagsInput from "../components/TagsInput";
+import { TodoContext } from "../contexts/todoContext";
+import TaskInput from "../components/TaskInput";
 
 export default function NewTodoPage() {
-  const [taskNameInputFocused, setTaskNameInputFocused] = useState(false);
-  const taskNameRef = useRef();
+  const { setTodos } = useContext(TodoContext);
+  const navigate = useNavigate();
+
+  const [currentTodo, setCurrentTodo] = useState({
+    id: crypto.randomUUID(),
+    taskName: "",
+    priorityLevel: 0,
+    complexityLevel: 0,
+    dueDate: null,
+    dueTime: null,
+    subTasks: [],
+    tags: [],
+  });
+
+  const handleSubmitNewTask = () => {
+    setTodos((prev) => {
+      return [...prev, currentTodo];
+    });
+  };
+
   return (
     <>
       <div className="jusi flex w-[398px] flex-col">
@@ -44,42 +64,25 @@ export default function NewTodoPage() {
           </Link>
           <h1 className="text-center text-H1 font-medium">Add New Task</h1>
         </div>
-        <h2 className="text-H2 font-medium">Task Name</h2>
+        <TaskInput {...currentTodo} setCurrentTodo={setCurrentTodo} />
+        <SelectPriorityLevel {...currentTodo} setCurrentTodo={setCurrentTodo} />
+        <SelectComplexityLevel
+          {...currentTodo}
+          setCurrentTodo={setCurrentTodo}
+        />
+        <div className="mt-5 flex justify-between">
+          <SelectDueDate {...currentTodo} setCurrentTodo={setCurrentTodo} />
+          <SelectTime {...currentTodo} setCurrentTodo={setCurrentTodo} />
+        </div>
+        <SubtaskInput {...currentTodo} setCurrentTodo={setCurrentTodo} />
+        <TagsInput {...currentTodo} setCurrentTodo={setCurrentTodo} />
         <div
-          className={`mb-5 flex h-[60px] w-[398px] cursor-text items-center justify-between rounded-full bg-WH ${
-            taskNameInputFocused
-              ? "border-1 border-BLK"
-              : "border-1 border-STROKE"
-          }`}
+          className="mt-5 flex h-[60px] w-[192px] cursor-pointer items-center justify-center self-center rounded-full bg-PRIMARY text-PRIMARYBUTTON text-WH transition-all hover:scale-110"
           onClick={() => {
-            taskNameRef.current.focus();
+            handleSubmitNewTask();
+            navigate("/");
           }}
         >
-          <input
-            ref={taskNameRef}
-            type="text"
-            name="search"
-            id="search"
-            className="ml-4 cursor-text outline-none"
-            placeholder="Name of task..."
-            onFocus={() => {
-              setTaskNameInputFocused((prev) => !prev);
-            }}
-            onBlur={() => {
-              setTaskNameInputFocused((prev) => !prev);
-            }}
-          />
-        </div>
-
-        <SelectPriorityLevel />
-        <SelectComplexityLevel />
-        <div className="mt-5 flex justify-between">
-          <SelectDueDate />
-          <SelectTime />
-        </div>
-        <SubtaskInput />
-        <TagsInput />
-        <div className="mt-5 flex h-[60px] w-[192px] cursor-pointer items-center justify-center self-center rounded-full bg-PRIMARY text-PRIMARYBUTTON text-WH transition-all hover:scale-110">
           Save Task
         </div>
       </div>

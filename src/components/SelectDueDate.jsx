@@ -1,4 +1,9 @@
-export default function SelectDueDate() {
+export default function SelectDueDate({ dueDate, setCurrentTodo }) {
+  const handleChange = (value) => {
+    setCurrentTodo((prev) => {
+      return { ...prev, dueDate: value };
+    });
+  };
   return (
     <>
       <div className="flex flex-col">
@@ -8,6 +13,7 @@ export default function SelectDueDate() {
           name="date"
           id="date-picker"
           className="w-[184px] cursor-pointer rounded-full p-2"
+          onChange={(e) => handleChange(e.target.value)}
         />
       </div>
     </>

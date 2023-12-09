@@ -1,13 +1,29 @@
 import React, { useRef, useState } from "react";
 
-export default function SubtaskInput() {
+export default function SubtaskInput({ subTasks, setCurrentTodo }) {
   const [subtaskNameInputFocused, setSubtaskNameInputFocused] = useState(false);
   const subtaskNameRef = useRef();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let value = subtaskNameRef.current.value;
+    if (value.length < 1 || subTasks.includes(value)) {
+      subtaskNameRef.current.value = "";
+      return;
+    }
+    let newSubtaskList = [...subTasks, value];
+    setCurrentTodo((prev) => {
+      return { ...prev, subTasks: newSubtaskList };
+    });
+    subtaskNameRef.current.value = "";
+  };
+
   return (
     <>
       <div className="mt-5">
-        <h2 className="text-H2 font-medium">Add Checklist For Subtasks</h2>
-        <div
+        <h2 className="text-H2 font-medium">Add Subtask</h2>
+        <form
+          onSubmit={handleSubmit}
           className={`mb-5 flex h-[60px] w-[398px] cursor-text items-center justify-between rounded-full bg-WH ${
             subtaskNameInputFocused
               ? "border-1 border-BLK"
@@ -22,7 +38,7 @@ export default function SubtaskInput() {
             type="text"
             name="search"
             id="search"
-            className="ml-4 cursor-text outline-none"
+            className="ml-4 mr-4 w-full cursor-text outline-none"
             placeholder="Add New Subtask..."
             onFocus={() => {
               setSubtaskNameInputFocused((prev) => !prev);
@@ -59,7 +75,7 @@ export default function SubtaskInput() {
               strokeLinejoin="round"
             />
           </svg>
-        </div>
+        </form>
       </div>
     </>
   );

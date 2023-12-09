@@ -1,9 +1,12 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState, Fragment } from "react";
 import SortDropdown from "../components/SortDropdown";
 import CategoryDropdown from "../components/CategoryDropdown";
 import { Link } from "react-router-dom";
+import { TodoContext } from "../contexts/todoContext";
+import Todo from "../components/Todo";
 
 export default function MainPage() {
+  const { todos, setTodos } = useContext(TodoContext);
   const [searchFocused, setSearchFocused] = useState(false);
   const searchRef = useRef();
   return (
@@ -42,7 +45,7 @@ export default function MainPage() {
             type="text"
             name="search"
             id="search"
-            className="ml-2 cursor-text outline-none"
+            className="ml-4 mr-4 w-full cursor-text outline-none"
             placeholder="Search..."
             onFocus={() => {
               setSearchFocused((prev) => !prev);
@@ -84,6 +87,11 @@ export default function MainPage() {
       <div className="mb-5 flex w-[398px] justify-between">
         <SortDropdown />
         <CategoryDropdown />
+      </div>
+      <div className="mb-5">
+        {todos.map((value) => {
+          return <Todo value={value} />;
+        })}
       </div>
 
       <Link

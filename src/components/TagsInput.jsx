@@ -1,8 +1,13 @@
 import React, { useRef, useState } from "react";
 
-export default function TagsInput() {
+export default function TagsInput({ tags, setCurrentTodo }) {
   const [tagsInputFocused, setTagsInputFocused] = useState(false);
   const tagsRef = useRef();
+  const handleChange = (value) => {
+    setCurrentTodo((prev) => {
+      return { ...prev, tags: value.split(",") };
+    });
+  };
   return (
     <>
       <div>
@@ -20,7 +25,7 @@ export default function TagsInput() {
             type="text"
             name="search"
             id="search"
-            className="ml-4 cursor-text outline-none"
+            className="ml-4 mr-4 w-full cursor-text outline-none"
             placeholder="Career, Job, Fun"
             onFocus={() => {
               setTagsInputFocused((prev) => !prev);
@@ -28,6 +33,7 @@ export default function TagsInput() {
             onBlur={() => {
               setTagsInputFocused((prev) => !prev);
             }}
+            onChange={(e) => handleChange(e.target.value)}
           />
         </div>
       </div>

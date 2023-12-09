@@ -28,7 +28,7 @@ export default function SortDropdown() {
                 strokeLinejoin="round"
               />
             </svg>
-            <div className="absolute left-1/2 top-10 w-[184px] -translate-x-1/2 rounded-xl bg-WH">
+            <div className="absolute left-1/2 top-10 z-10 w-[184px] -translate-x-1/2 rounded-xl bg-WH">
               <SortRadioList />
             </div>
           </div>

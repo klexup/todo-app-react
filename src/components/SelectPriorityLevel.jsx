@@ -1,73 +1,35 @@
-import { useState } from "react";
-
-export default function SelectPriorityLevel() {
-  const [priorityValue, setPriorityValue] = useState(0);
+export default function SelectPriorityLevel({ priorityLevel, setCurrentTodo }) {
+  const prioItemProps = { priorityLevel, setCurrentTodo };
+  const values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   return (
     <>
       <h2 className="text-H2 font-medium">Select Priority Level</h2>
       <div className="flex justify-between pb-1 pt-1">
-        <PriorityLevelItem
-          priorityLevel={1}
-          priorityValue={priorityValue}
-          setPriorityValue={setPriorityValue}
-        />
-        <PriorityLevelItem
-          priorityLevel={2}
-          priorityValue={priorityValue}
-          setPriorityValue={setPriorityValue}
-        />
-        <PriorityLevelItem
-          priorityLevel={3}
-          priorityValue={priorityValue}
-          setPriorityValue={setPriorityValue}
-        />
-        <PriorityLevelItem
-          priorityLevel={4}
-          priorityValue={priorityValue}
-          setPriorityValue={setPriorityValue}
-        />
-        <PriorityLevelItem
-          priorityLevel={5}
-          priorityValue={priorityValue}
-          setPriorityValue={setPriorityValue}
-        />
-        <PriorityLevelItem
-          priorityLevel={6}
-          priorityValue={priorityValue}
-          setPriorityValue={setPriorityValue}
-        />
-        <PriorityLevelItem
-          priorityLevel={7}
-          priorityValue={priorityValue}
-          setPriorityValue={setPriorityValue}
-        />
-        <PriorityLevelItem
-          priorityLevel={8}
-          priorityValue={priorityValue}
-          setPriorityValue={setPriorityValue}
-        />
-        <PriorityLevelItem
-          priorityLevel={9}
-          priorityValue={priorityValue}
-          setPriorityValue={setPriorityValue}
-        />
-        <PriorityLevelItem
-          priorityLevel={10}
-          priorityValue={priorityValue}
-          setPriorityValue={setPriorityValue}
-        />
+        {values.map((value, index) => {
+          return (
+            <PriorityLevelItem
+              priorityValue={value}
+              {...prioItemProps}
+              key={index}
+            />
+          );
+        })}
       </div>
     </>
   );
 }
 
-function PriorityLevelItem({ priorityLevel, priorityValue, setPriorityValue }) {
+function PriorityLevelItem({ priorityValue, priorityLevel, setCurrentTodo }) {
   const handleClick = () => {
-    if (priorityLevel === priorityValue) {
-      setPriorityValue(0);
-      return;
+    if (priorityValue === priorityLevel) {
+      setCurrentTodo((prev) => {
+        return { ...prev, priorityLevel: 0 };
+      });
+    } else {
+      setCurrentTodo((prev) => {
+        return { ...prev, priorityLevel: priorityValue };
+      });
     }
-    setPriorityValue(priorityLevel);
   };
   return (
     <>
@@ -77,7 +39,7 @@ function PriorityLevelItem({ priorityLevel, priorityValue, setPriorityValue }) {
         } p-1 text-RADIONUMBER`}
         onClick={() => handleClick()}
       >
-        {priorityLevel}
+        {priorityValue}
       </div>
     </>
   );
