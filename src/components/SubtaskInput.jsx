@@ -6,11 +6,20 @@ export default function SubtaskInput({ subTasks, setCurrentTodo }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let value = subtaskNameRef.current.value;
-    if (value.length < 1 || subTasks.includes(value)) {
+    let value = {
+      subtaskName: subtaskNameRef.current.value.trim(),
+      subtaskId: crypto.randomUUID(),
+      subtaskCompleted: false,
+    };
+
+    if (
+      value.subtaskName.length < 1 ||
+      subTasks.some((subtask) => subtask.subtaskName === value.subtaskName)
+    ) {
       subtaskNameRef.current.value = "";
       return;
     }
+
     let newSubtaskList = [...subTasks, value];
     setCurrentTodo((prev) => {
       return { ...prev, subTasks: newSubtaskList };
@@ -56,7 +65,7 @@ export default function SubtaskInput({ subTasks, setCurrentTodo }) {
             className="mr-3 cursor-pointer transition-all hover:scale-110"
             onClick={(e) => {
               e.stopPropagation();
-              // will be button to add subtask
+              handleSubmit(e);
             }}
           >
             <circle cx="18" cy="18" r="18" fill="#0D99FF" fillOpacity="0.1" />

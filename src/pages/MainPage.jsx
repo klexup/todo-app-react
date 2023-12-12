@@ -89,8 +89,8 @@ export default function MainPage() {
         <CategoryDropdown />
       </div>
       <div className="mb-5">
-        {todos.map((value) => {
-          return <Todo value={value} />;
+        {todos.map((value, index) => {
+          return <Todo value={value} key={index} />;
         })}
       </div>
 

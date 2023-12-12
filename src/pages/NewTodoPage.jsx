@@ -1,5 +1,5 @@
-import { useContext, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import SelectPriorityLevel from "../components/SelectPriorityLevel";
 import SelectComplexityLevel from "../components/SelectComplexityLevel";
 import SelectDueDate from "../components/SelectDueDate";
@@ -8,13 +8,14 @@ import SubtaskInput from "../components/SubtaskInput";
 import TagsInput from "../components/TagsInput";
 import { TodoContext } from "../contexts/todoContext";
 import TaskInput from "../components/TaskInput";
+import CurrentSubtasksList from "../components/CurrentSubtasksList";
 
 export default function NewTodoPage() {
-  const { setTodos } = useContext(TodoContext);
-  const navigate = useNavigate();
+  const { handleSubmitNewTask } = useContext(TodoContext);
 
   const [currentTodo, setCurrentTodo] = useState({
     id: crypto.randomUUID(),
+    completed: false,
     taskName: "",
     priorityLevel: 0,
     complexityLevel: 0,
@@ -23,12 +24,6 @@ export default function NewTodoPage() {
     subTasks: [],
     tags: [],
   });
-
-  const handleSubmitNewTask = () => {
-    setTodos((prev) => {
-      return [...prev, currentTodo];
-    });
-  };
 
   return (
     <>
@@ -75,16 +70,17 @@ export default function NewTodoPage() {
           <SelectTime {...currentTodo} setCurrentTodo={setCurrentTodo} />
         </div>
         <SubtaskInput {...currentTodo} setCurrentTodo={setCurrentTodo} />
+        <CurrentSubtasksList {...currentTodo} setCurrentTodo={setCurrentTodo} />
         <TagsInput {...currentTodo} setCurrentTodo={setCurrentTodo} />
-        <div
+        <Link
+          to={"/"}
           className="mt-5 flex h-[60px] w-[192px] cursor-pointer items-center justify-center self-center rounded-full bg-PRIMARY text-PRIMARYBUTTON text-WH transition-all hover:scale-110"
           onClick={() => {
-            handleSubmitNewTask();
-            navigate("/");
+            handleSubmitNewTask(currentTodo);
           }}
         >
           Save Task
-        </div>
+        </Link>
       </div>
     </>
   );

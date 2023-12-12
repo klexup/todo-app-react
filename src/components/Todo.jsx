@@ -3,7 +3,6 @@ import ProgressRing from "./ProgressRing";
 
 export default function Todo({ value }) {
   const {
-    id,
     taskName,
     priorityLevel,
     complexityLevel,
@@ -66,11 +65,27 @@ export default function Todo({ value }) {
     "bg-amber-200",
   ];
 
+  const formattedDueDate = () => {
+    let str = "";
+    if (dueDate) {
+      str += dueDate;
+    }
+    if (dueTime && !dueDate) {
+      str += dueTime;
+      return str;
+    }
+    if (dueTime) {
+      str += ", " + dueTime;
+    }
+    if (!dueTime && !dueDate) {
+      str = "None";
+      return str;
+    }
+    return str;
+  };
+
   return (
-    <div
-      className="relative mb-2 mt-2 flex w-[398px] flex-col gap-1 rounded-2xl bg-WH p-2"
-      key={id}
-    >
+    <div className="relative mb-2 mt-2 flex w-[398px] flex-col gap-1 rounded-2xl bg-WH p-2">
       <div className="flex justify-between">
         <div className="flex items-center">
           <div
@@ -85,31 +100,31 @@ export default function Todo({ value }) {
             viewBox="0 0 32 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="cursor-pointer"
+            className="cursor-pointer transition-all hover:scale-110"
           >
-            <circle cx="16" cy="16" r="16" fill="#0D99FF" fill-opacity="0.1" />
+            <circle cx="16" cy="16" r="16" fill="#0D99FF" fillOpacity="0.1" />
             <path
               d="M17.2747 21.9239H22.0574"
               stroke="#717171"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M16.6413 10.7168C17.194 10.0125 18.0873 10.0493 18.7923 10.602L19.8348 11.4195C20.5398 11.9723 20.7895 12.8295 20.2368 13.5353L14.02 21.4665C13.8123 21.732 13.495 21.8888 13.1575 21.8925L10.7598 21.9233L10.2168 19.587C10.1403 19.2593 10.2168 18.9143 10.4245 18.648L16.6413 10.7168Z"
               stroke="#717171"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M15.4771 12.2021L19.0726 15.0206"
               stroke="#717171"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
           <svg
@@ -118,15 +133,15 @@ export default function Todo({ value }) {
             viewBox="0 0 32 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="cursor-pointer"
+            className="cursor-pointer transition-all hover:scale-110"
           >
-            <circle cx="16" cy="16" r="16" fill="#0D99FF" fill-opacity="0.1" />
+            <circle cx="16" cy="16" r="16" fill="#0D99FF" fillOpacity="0.1" />
             <path
               d="M22 11.5L13.75 19.75L10 16"
               stroke="#717171"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </div>
@@ -142,14 +157,12 @@ export default function Todo({ value }) {
           <path
             d="M2.25 6.75V13.5C2.25 15.1569 3.59315 16.5 5.25 16.5H12.75C14.4069 16.5 15.75 15.1569 15.75 13.5V6.75M2.25 6.75V5.625C2.25 3.96815 3.59315 2.625 5.25 2.625H12.75C14.4069 2.625 15.75 3.96815 15.75 5.625V6.75M2.25 6.75H15.75M12 1.5V3.75M6 1.5V3.75"
             stroke="#090003"
-            stroke-width="1.5"
-            stroke-linecap="round"
+            strokeWidth="1.5"
+            strokeLinecap="round"
           />
         </svg>
         <span className="text-GRAY">Due Date:</span>
-        <span className={getDueDateColor()}>
-          {dueDate}, {dueTime}
-        </span>
+        <span className={getDueDateColor()}>{formattedDueDate()}</span>
       </div>
       <div className="flex justify-start gap-2">
         <svg
@@ -162,16 +175,16 @@ export default function Todo({ value }) {
           <path
             d="M9 14.25V3.75"
             stroke="#25282B"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M3.75 9L9 3.75L14.25 9"
             stroke="#25282B"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
         <span className="text-GRAY">
@@ -186,48 +199,48 @@ export default function Todo({ value }) {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g clip-path="url(#clip0_646_2092)">
+          <g clipPath="url(#clip0_646_2092)">
             <path
               d="M3.75 6.75L1.5 9L3.75 11.25"
               stroke="#25282B"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M6.75 3.75L9 1.5L11.25 3.75"
               stroke="#25282B"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M11.25 14.25L9 16.5L6.75 14.25"
               stroke="#25282B"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M14.25 6.75L16.5 9L14.25 11.25"
               stroke="#25282B"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M1.5 9H16.5"
               stroke="#25282B"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M9 1.5V16.5"
               stroke="#25282B"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </g>
           <defs>
@@ -241,20 +254,19 @@ export default function Todo({ value }) {
         </span>
       </div>
       <div className="flex gap-2 overflow-hidden">
-        {tags.map((value) => {
+        {tags.map((value, index) => {
           const color = tagColors[Math.floor(Math.random() * 11)];
           return (
-            <>
-              <div
-                className={`rounded-full ${color}  pb-1 pl-2 pr-2 pt-1 text-RADIOTEXT`}
-              >
-                {value}
-              </div>
-            </>
+            <div
+              key={index}
+              className={`rounded-full ${color}  pb-1 pl-2 pr-2 pt-1 text-RADIOTEXT`}
+            >
+              {value}
+            </div>
           );
         })}
       </div>
-      <ProgressRing percentage={0} />
+      <ProgressRing percentage={50} priorityLevel={priorityLevel} />
     </div>
   );
 }
