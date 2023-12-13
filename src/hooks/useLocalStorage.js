@@ -26,7 +26,7 @@ export default function useLocalStorage(storageName) {
       const prevCopy = prev.map((todo) =>
         todo.id === updatedTodo.id ? updatedTodo : todo,
       );
-      setLocalStorage(storageName, setLocalStorage);
+      setLocalStorage(storageName, prevCopy);
       return prevCopy;
     });
   };

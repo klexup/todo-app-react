@@ -1,13 +1,20 @@
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  Outlet,
+  RouterProvider,
+} from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import NewTodoPage from "./pages/NewTodoPage";
 import EditTodoPage from "./pages/EditTodoPage";
+import ViewTodoPage from "./pages/ViewTodoPage";
 
 export default function Router() {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <MainContainer />,
+      errorElement: <Navigate to={"/"} />,
       children: [
         {
           index: true,
@@ -21,6 +28,7 @@ export default function Router() {
           path: `editTodo/:todoId`,
           element: <EditTodoPage />,
         },
+        { path: "viewTodo/:todoId", element: <ViewTodoPage /> },
       ],
     },
   ]);

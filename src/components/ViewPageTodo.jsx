@@ -2,7 +2,7 @@ import React from "react";
 import ProgressRing from "./ProgressRing";
 import { useNavigate } from "react-router-dom";
 
-export default function Todo({ value }) {
+export default function ViewPageTodo({ value }) {
   const {
     taskName,
     priorityLevel,
@@ -89,18 +89,13 @@ export default function Todo({ value }) {
   };
 
   return (
-    <div
-      className="relative mb-2 mt-2 flex w-[398px] cursor-pointer flex-col gap-1 rounded-2xl bg-WH p-2 transition-all hover:shadow-md"
-      onClick={() => {
-        navigate(`viewTodo/${id}`);
-      }}
-    >
+    <div className="relative mb-2 mt-2 flex w-[398px] flex-col gap-4 rounded-2xl bg-WH p-2">
       <div className="flex justify-between">
         <div className="flex items-center">
           <div
             className={`h-[18px] w-[18px] rounded-full ${getPriorityColor()}`}
           ></div>
-          <div className="ml-2 font-medium">{taskName}</div>
+          <div className="ml-2 text-xl font-medium">{taskName}</div>
         </div>
         <div className="flex gap-2">
           <svg
@@ -110,9 +105,8 @@ export default function Todo({ value }) {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className="cursor-pointer transition-all hover:scale-110"
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate(`editTodo/${id}`);
+            onClick={() => {
+              navigate(`/editTodo/${id}`);
             }}
           >
             <circle cx="16" cy="16" r="16" fill="#0D99FF" fillOpacity="0.1" />
@@ -265,19 +259,6 @@ export default function Todo({ value }) {
         <span className="text-GRAY">
           Complexity: <span className="text-BLK">{getComplexityLevel()}</span>
         </span>
-      </div>
-      <div className="flex gap-2 overflow-hidden">
-        {tags.map((value, index) => {
-          const color = tagColors[Math.floor(Math.random() * 11)];
-          return (
-            <div
-              key={index}
-              className={`rounded-full ${color}  pb-1 pl-2 pr-2 pt-1 text-RADIOTEXT`}
-            >
-              {value}
-            </div>
-          );
-        })}
       </div>
       {subTasks[0] ? (
         <ProgressRing percentage={50} priorityLevel={priorityLevel} />
