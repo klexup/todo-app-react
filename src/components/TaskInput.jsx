@@ -29,6 +29,7 @@ export default function TaskInput({ taskName, setCurrentTodo }) {
           id="search"
           className="ml-4 mr-4 w-full cursor-text outline-none"
           placeholder="Name of task..."
+          value={taskName || ""}
           onFocus={() => {
             setTaskNameInputFocused((prev) => !prev);
           }}

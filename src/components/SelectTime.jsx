@@ -13,6 +13,7 @@ export default function SelectTime({ dueTime, setCurrentTodo }) {
           name="time"
           id="time-picker"
           className="w-[184px] cursor-pointer rounded-full p-2"
+          value={dueTime || ""}
           onChange={(e) => handleChange(e.target.value)}
         />
       </div>

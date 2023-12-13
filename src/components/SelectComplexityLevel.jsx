@@ -47,6 +47,7 @@ function ComplexityLevelItem({
             : "bg-BLUE10PERCENT"
         } p-1 text-RADIONUMBER`}
         onClick={() => handleClick()}
+        tabIndex={0}
       >
         {complexityValue}
       </div>

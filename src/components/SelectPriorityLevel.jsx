@@ -38,6 +38,7 @@ function PriorityLevelItem({ priorityValue, priorityLevel, setCurrentTodo }) {
           priorityValue === priorityLevel ? "bg-PRIMARY" : "bg-BLUE10PERCENT"
         } p-1 text-RADIONUMBER`}
         onClick={() => handleClick()}
+        tabIndex={0}
       >
         {priorityValue}
       </div>

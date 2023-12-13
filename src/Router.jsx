@@ -1,6 +1,7 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import NewTodoPage from "./pages/NewTodoPage";
+import EditTodoPage from "./pages/EditTodoPage";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -15,6 +16,10 @@ export default function Router() {
         {
           path: "newTodo",
           element: <NewTodoPage />,
+        },
+        {
+          path: `editTodo/:todoId`,
+          element: <EditTodoPage />,
         },
       ],
     },

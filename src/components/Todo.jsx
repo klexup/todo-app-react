@@ -1,5 +1,6 @@
 import React from "react";
 import ProgressRing from "./ProgressRing";
+import { useNavigate } from "react-router-dom";
 
 export default function Todo({ value }) {
   const {
@@ -10,7 +11,10 @@ export default function Todo({ value }) {
     dueTime,
     subTasks,
     tags,
+    id,
   } = value;
+
+  const navigate = useNavigate();
 
   const getPriorityColor = () => {
     if (priorityLevel <= 3) {
@@ -101,6 +105,9 @@ export default function Todo({ value }) {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className="cursor-pointer transition-all hover:scale-110"
+            onClick={() => {
+              navigate(`editTodo/${id}`);
+            }}
           >
             <circle cx="16" cy="16" r="16" fill="#0D99FF" fillOpacity="0.1" />
             <path

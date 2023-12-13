@@ -27,6 +27,7 @@ export default function TagsInput({ tags, setCurrentTodo }) {
             id="search"
             className="ml-4 mr-4 w-full cursor-text outline-none"
             placeholder="Career, Job, Fun"
+            value={tags || ""}
             onFocus={() => {
               setTagsInputFocused((prev) => !prev);
             }}
