@@ -9,10 +9,14 @@ export default function useLocalStorage(storageName) {
     return array;
   });
 
+  const setLocalStorage = (storageName, newValue) => {
+    localStorage.setItem(storageName, JSON.stringify(newValue));
+  };
+
   const handleSubmitNewTask = (newTodo) => {
     setTodos((prev) => {
       const updatedArray = [...prev, newTodo];
-      localStorage.setItem(storageName, JSON.stringify(updatedArray));
+      setLocalStorage(storageName, updatedArray);
       return updatedArray;
     });
   };
@@ -22,8 +26,7 @@ export default function useLocalStorage(storageName) {
       const prevCopy = prev.map((todo) =>
         todo.id === updatedTodo.id ? updatedTodo : todo,
       );
-
-      localStorage.setItem(storageName, JSON.stringify(prevCopy));
+      setLocalStorage(storageName, setLocalStorage);
       return prevCopy;
     });
   };
