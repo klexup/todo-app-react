@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
 import ViewPageTodo from "../components/ViewPageTodo";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { TodoContext } from "../contexts/todoContext";
 import SubtaskChecklist from "../components/SubtaskChecklist";
 
 export default function ViewTodoPage() {
-  const { todos } = useContext(TodoContext);
+  const { todos, handleDeleteTask } = useContext(TodoContext);
   const { todoId } = useParams();
+  const navigate = useNavigate();
 
   const [currentTodo, setCurrentTodo] = useState(() => {
     const foundTodo = todos.find((todo) => {
@@ -52,14 +53,40 @@ export default function ViewTodoPage() {
           <h1 className="text-center text-H1 font-medium">Task Details</h1>
         </div>
         <ViewPageTodo value={currentTodo} />
-        <h1 className="mt-5 text-left text-H1 font-medium">
-          Checklist for subtasks
-        </h1>
+
+        {currentTodo.subTasks.length > 0 ? (
+          <h1 className="mt-5 text-left text-H1 font-medium">
+            Checklist for subtasks
+          </h1>
+        ) : (
+          false
+        )}
+
         <SubtaskChecklist
           {...currentTodo}
           setCurrentTodo={setCurrentTodo}
           currentTodo={currentTodo}
         />
+
+        <div className="mt-5 flex justify-between">
+          <div
+            className="flex h-[60px] w-[184px] cursor-pointer items-center justify-center rounded-full bg-blue-100 transition-all hover:bg-PRIMARY"
+            onClick={() => {
+              navigate(`/editTodo/${todoId}`);
+            }}
+          >
+            Edit Task
+          </div>
+          <div
+            className="flex h-[60px] w-[184px] cursor-pointer items-center justify-center rounded-full bg-red-100 transition-all hover:bg-STYLE"
+            onClick={() => {
+              handleDeleteTask(todoId);
+              navigate(`/`);
+            }}
+          >
+            Delete Task
+          </div>
+        </div>
       </div>
     </>
   );

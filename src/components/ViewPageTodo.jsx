@@ -77,7 +77,7 @@ export default function ViewPageTodo({ value }) {
         subtasksComplete += 1;
       }
     });
-    return (subtasksComplete / totalSubtasks) * 100;
+    return Math.floor((subtasksComplete / totalSubtasks) * 100);
   };
 
   const percentageComplete = calculatePercentageComplete();
@@ -114,44 +114,7 @@ export default function ViewPageTodo({ value }) {
           ></div>
           <div className="ml-2 text-xl font-medium">{taskName}</div>
         </div>
-        <div className="flex gap-2">
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="cursor-pointer transition-all hover:scale-110"
-            onClick={() => {
-              navigate(`/editTodo/${id}`);
-            }}
-          >
-            <circle cx="16" cy="16" r="16" fill="#0D99FF" fillOpacity="0.1" />
-            <path
-              d="M17.2747 21.9239H22.0574"
-              stroke="#717171"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M16.6413 10.7168C17.194 10.0125 18.0873 10.0493 18.7923 10.602L19.8348 11.4195C20.5398 11.9723 20.7895 12.8295 20.2368 13.5353L14.02 21.4665C13.8123 21.732 13.495 21.8888 13.1575 21.8925L10.7598 21.9233L10.2168 19.587C10.1403 19.2593 10.2168 18.9143 10.4245 18.648L16.6413 10.7168Z"
-              stroke="#717171"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M15.4771 12.2021L19.0726 15.0206"
-              stroke="#717171"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
+        <div className="flex gap-2"></div>
       </div>
       <div className="flex justify-start gap-2">
         <svg

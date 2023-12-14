@@ -10,6 +10,7 @@ export default function TodoProvider({ children }) {
     handleSubmitNewTask,
     handleUpdateTask,
     toggleCompleted,
+    handleDeleteTask,
   ] = useLocalStorage("todos");
 
   return (
@@ -21,6 +22,7 @@ export default function TodoProvider({ children }) {
           handleSubmitNewTask,
           handleUpdateTask,
           toggleCompleted,
+          handleDeleteTask,
         }}
       >
         {children}

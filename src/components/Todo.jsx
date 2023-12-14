@@ -97,7 +97,7 @@ export default function Todo({ value, toggleCompleted }) {
         subtasksComplete += 1;
       }
     });
-    return (subtasksComplete / totalSubtasks) * 100;
+    return Math.floor((subtasksComplete / totalSubtasks) * 100);
   };
 
   const percentageComplete = calculatePercentageComplete();

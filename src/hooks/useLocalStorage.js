@@ -44,11 +44,20 @@ export default function useLocalStorage(storageName) {
     });
   };
 
+  const handleDeleteTask = (id) => {
+    setTodos(() => {
+      const updatedArr = todos.filter((value) => value.id !== id);
+      setLocalStorage(storageName, updatedArr);
+      return updatedArr;
+    });
+  };
+
   return [
     todos,
     setTodos,
     handleSubmitNewTask,
     handleUpdateTask,
     toggleCompleted,
+    handleDeleteTask,
   ];
 }
