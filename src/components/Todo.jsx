@@ -2,7 +2,7 @@ import React from "react";
 import ProgressRing from "./ProgressRing";
 import { useNavigate } from "react-router-dom";
 
-export default function Todo({ value }) {
+export default function Todo({ value, toggleCompleted }) {
   const {
     taskName,
     priorityLevel,
@@ -12,6 +12,7 @@ export default function Todo({ value }) {
     subTasks,
     tags,
     id,
+    completed,
   } = value;
 
   const navigate = useNavigate();
@@ -88,9 +89,24 @@ export default function Todo({ value }) {
     return str;
   };
 
+  const calculatePercentageComplete = () => {
+    const totalSubtasks = subTasks.length;
+    let subtasksComplete = 0;
+    subTasks.forEach((value) => {
+      if (value.subtaskCompleted) {
+        subtasksComplete += 1;
+      }
+    });
+    return (subtasksComplete / totalSubtasks) * 100;
+  };
+
+  const percentageComplete = calculatePercentageComplete();
+
   return (
     <div
-      className="relative mb-2 mt-2 flex w-[398px] cursor-pointer flex-col gap-1 rounded-2xl bg-WH p-2 transition-all hover:shadow-md"
+      className={`relative mb-2 mt-2 flex w-[398px] cursor-pointer flex-col gap-1 rounded-2xl p-2 transition-all hover:shadow-md ${
+        completed ? "bg-green-200" : "bg-WH"
+      }`}
       onClick={() => {
         navigate(`viewTodo/${id}`);
       }}
@@ -147,6 +163,10 @@ export default function Todo({ value }) {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className="cursor-pointer transition-all hover:scale-110"
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleCompleted(id);
+            }}
           >
             <circle cx="16" cy="16" r="16" fill="#0D99FF" fillOpacity="0.1" />
             <path
@@ -280,7 +300,10 @@ export default function Todo({ value }) {
         })}
       </div>
       {subTasks[0] ? (
-        <ProgressRing percentage={50} priorityLevel={priorityLevel} />
+        <ProgressRing
+          percentage={percentageComplete}
+          priorityLevel={priorityLevel}
+        />
       ) : (
         false
       )}

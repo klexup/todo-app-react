@@ -6,7 +6,7 @@ import { TodoContext } from "../contexts/todoContext";
 import Todo from "../components/Todo";
 
 export default function MainPage() {
-  const { todos, setTodos } = useContext(TodoContext);
+  const { todos, setTodos, toggleCompleted } = useContext(TodoContext);
   const [searchFocused, setSearchFocused] = useState(false);
   const searchRef = useRef();
   return (
@@ -90,7 +90,9 @@ export default function MainPage() {
       </div>
       <div className="mb-5">
         {todos.map((value, index) => {
-          return <Todo value={value} key={index} />;
+          return (
+            <Todo value={value} key={index} toggleCompleted={toggleCompleted} />
+          );
         })}
       </div>
 

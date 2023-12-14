@@ -8,6 +8,7 @@ export default function SubtaskDetailsPage({
   currentTodo,
 }) {
   const { handleUpdateTask } = useContext(TodoContext);
+
   const handleToggleComplete = () => {
     const updatedSubTasks = subTasks.map((value, indx) => {
       if (indx === index)

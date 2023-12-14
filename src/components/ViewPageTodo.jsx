@@ -12,8 +12,8 @@ export default function ViewPageTodo({ value }) {
     subTasks,
     tags,
     id,
+    completed,
   } = value;
-
   const navigate = useNavigate();
 
   const getPriorityColor = () => {
@@ -69,6 +69,19 @@ export default function ViewPageTodo({ value }) {
     "bg-amber-200",
   ];
 
+  const calculatePercentageComplete = () => {
+    const totalSubtasks = subTasks.length;
+    let subtasksComplete = 0;
+    subTasks.forEach((value) => {
+      if (value.subtaskCompleted) {
+        subtasksComplete += 1;
+      }
+    });
+    return (subtasksComplete / totalSubtasks) * 100;
+  };
+
+  const percentageComplete = calculatePercentageComplete();
+
   const formattedDueDate = () => {
     let str = "";
     if (dueDate) {
@@ -89,7 +102,11 @@ export default function ViewPageTodo({ value }) {
   };
 
   return (
-    <div className="relative mb-2 mt-2 flex w-[398px] flex-col gap-4 rounded-2xl bg-WH p-2">
+    <div
+      className={`relative mb-2 mt-2 flex w-[398px] flex-col gap-4 rounded-2xl ${
+        completed ? "bg-green-200" : "bg-WH"
+      } p-2 `}
+    >
       <div className="flex justify-between">
         <div className="flex items-center">
           <div
@@ -130,23 +147,6 @@ export default function ViewPageTodo({ value }) {
               d="M15.4771 12.2021L19.0726 15.0206"
               stroke="#717171"
               strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="cursor-pointer transition-all hover:scale-110"
-          >
-            <circle cx="16" cy="16" r="16" fill="#0D99FF" fillOpacity="0.1" />
-            <path
-              d="M22 11.5L13.75 19.75L10 16"
-              stroke="#717171"
-              strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
@@ -261,7 +261,10 @@ export default function ViewPageTodo({ value }) {
         </span>
       </div>
       {subTasks[0] ? (
-        <ProgressRing percentage={50} priorityLevel={priorityLevel} />
+        <ProgressRing
+          percentage={percentageComplete}
+          priorityLevel={priorityLevel}
+        />
       ) : (
         false
       )}

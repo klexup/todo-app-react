@@ -31,5 +31,24 @@ export default function useLocalStorage(storageName) {
     });
   };
 
-  return [todos, setTodos, handleSubmitNewTask, handleUpdateTask];
+  const toggleCompleted = (id) => {
+    setTodos(() => {
+      const newArr = todos.map((value) => {
+        if (value.id === id) {
+          return { ...value, completed: !value.completed };
+        }
+        return value;
+      });
+      setLocalStorage(storageName, newArr);
+      return newArr;
+    });
+  };
+
+  return [
+    todos,
+    setTodos,
+    handleSubmitNewTask,
+    handleUpdateTask,
+    toggleCompleted,
+  ];
 }
