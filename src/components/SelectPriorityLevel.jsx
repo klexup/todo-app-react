@@ -39,6 +39,11 @@ function PriorityLevelItem({ priorityValue, priorityLevel, setCurrentTodo }) {
         } p-1 text-RADIONUMBER`}
         onClick={() => handleClick()}
         tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleClick();
+          }
+        }}
       >
         {priorityValue}
       </div>
