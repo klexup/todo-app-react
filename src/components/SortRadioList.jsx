@@ -1,62 +1,62 @@
 import React, { useState } from "react";
 
-export default function SortRadioList() {
+export default function SortRadioList({ setFilter, filter }) {
   const [sortValue, setSortValue] = useState("default");
 
   return (
     <div
-      className="text-RADIOTEXT flex flex-col gap-2 p-3"
+      className="flex flex-col gap-2 p-3 text-RADIOTEXT"
       onClick={(e) => e.stopPropagation()}
     >
       <RadioListItem
         label="Default"
         value="default"
-        sortValue={sortValue}
-        setSortValue={setSortValue}
+        filter={filter}
+        setFilter={setFilter}
       />
       <RadioListItem
         label="Ascending Date"
         value="ascending-date"
-        sortValue={sortValue}
-        setSortValue={setSortValue}
+        filter={filter}
+        setFilter={setFilter}
       />
       <RadioListItem
         label="Descending Date"
         value="descending-date"
-        sortValue={sortValue}
-        setSortValue={setSortValue}
+        filter={filter}
+        setFilter={setFilter}
       />
       <RadioListItem
         label="Ascending Complexity"
         value="ascending-complexity"
-        sortValue={sortValue}
-        setSortValue={setSortValue}
+        filter={filter}
+        setFilter={setFilter}
       />
       <RadioListItem
         label="Descending Complexity"
         value="descending-complexity"
-        sortValue={sortValue}
-        setSortValue={setSortValue}
+        filter={filter}
+        setFilter={setFilter}
       />
       <RadioListItem
         label="Ascending Priority"
         value="ascending-priority"
-        sortValue={sortValue}
-        setSortValue={setSortValue}
+        filter={filter}
+        setFilter={setFilter}
       />
       <RadioListItem
         label="Descending Priority"
         value="descending-priority"
-        sortValue={sortValue}
-        setSortValue={setSortValue}
+        filter={filter}
+        setFilter={setFilter}
       />
     </div>
   );
 }
 
-function RadioListItem({ label, value, sortValue, setSortValue }) {
+function RadioListItem({ label, value, filter, setFilter }) {
   const handleChange = () => {
-    setSortValue(value);
+    setFilter(value);
   };
 
   return (
@@ -67,9 +67,9 @@ function RadioListItem({ label, value, sortValue, setSortValue }) {
       {label}
       <input
         type="radio"
-        name="sort"
+        name="sortFilter"
         value={value}
-        checked={sortValue === value}
+        checked={filter === value}
         onChange={handleChange}
       />
     </div>

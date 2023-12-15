@@ -9,6 +9,92 @@ export default function MainPage() {
   const { todos, setTodos, toggleCompleted } = useContext(TodoContext);
   const [searchFocused, setSearchFocused] = useState(false);
   const searchRef = useRef();
+  const [tagFilter, setTagFilter] = useState(null);
+  const [filter, setFilter] = useState("default");
+
+  let allCurrentTags = [];
+  todos.forEach((element) => {
+    if (element.tags.length > 0) {
+      const tagArray = element.tags;
+      for (let value of tagArray) {
+        if (!allCurrentTags.includes(value)) {
+          allCurrentTags.push(value);
+        }
+      }
+    }
+  });
+  let todosCopy = [...todos];
+
+  if (tagFilter !== null) {
+    todosCopy = todosCopy.filter((value) => value.tags.includes(tagFilter));
+  }
+
+  function filterTodos() {
+    switch (filter) {
+      case "default":
+        return todosCopy;
+      case "ascending-priority":
+        return todosCopy.sort((a, b) => {
+          const valueA = a.priorityLevel;
+          const valueB = b.priorityLevel;
+          if (valueA < valueB) {
+            return -1;
+          } else if (valueA > valueB) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+      case "descending-priority":
+        return todosCopy.sort((a, b) => {
+          const valueA = a.priorityLevel;
+          const valueB = b.priorityLevel;
+          if (valueA < valueB) {
+            return 1;
+          } else if (valueA > valueB) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+      case "ascending-complexity":
+        return todosCopy.sort((a, b) => {
+          const valueA = a.complexityLevel;
+          const valueB = b.complexityLevel;
+          if (valueA < valueB) {
+            return -1;
+          } else if (valueA > valueB) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+      case "descending-complexity":
+        return todosCopy.sort((a, b) => {
+          const valueA = a.complexityLevel;
+          const valueB = b.complexityLevel;
+          if (valueA < valueB) {
+            return 1;
+          } else if (valueA > valueB) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+      case "ascending-date":
+        return todosCopy.sort(
+          (a, b) => new Date(a.dueDate) - new Date(b.dueDate),
+        );
+      case "descending-date":
+        return todosCopy.sort((a, b) => {
+          return new Date(b.dueDate) - new Date(a.dueDate);
+        });
+
+      default:
+        return todos;
+    }
+  }
+
   return (
     <>
       <div
@@ -85,11 +171,15 @@ export default function MainPage() {
         </svg>
       </div>
       <div className="mb-5 flex w-[398px] justify-between">
-        <SortDropdown />
-        <CategoryDropdown />
+        <SortDropdown setFilter={setFilter} filter={filter} />
+        <CategoryDropdown
+          allCurrentTags={allCurrentTags}
+          setTagFilter={setTagFilter}
+          tagFilter={tagFilter}
+        />
       </div>
       <div className="mb-5">
-        {todos.map((value, index) => {
+        {filterTodos().map((value, index) => {
           return (
             <Todo value={value} key={index} toggleCompleted={toggleCompleted} />
           );
