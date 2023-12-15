@@ -11,6 +11,7 @@ export default function MainPage() {
   const searchRef = useRef();
   const [tagFilter, setTagFilter] = useState(null);
   const [filter, setFilter] = useState("default");
+  const [searchInput, setSearchInput] = useState("");
 
   let allCurrentTags = [];
   todos.forEach((element) => {
@@ -23,12 +24,16 @@ export default function MainPage() {
       }
     }
   });
-  let todosCopy = [...todos];
 
+  let todosCopy = [...todos];
+  if (searchInput !== "") {
+    todosCopy = todosCopy.filter((value) =>
+      value.taskName.includes(searchInput),
+    );
+  }
   if (tagFilter !== null) {
     todosCopy = todosCopy.filter((value) => value.tags.includes(tagFilter));
   }
-
   function filterTodos() {
     switch (filter) {
       case "default":
@@ -128,6 +133,7 @@ export default function MainPage() {
           </svg>
           <input
             ref={searchRef}
+            value={searchInput}
             type="text"
             name="search"
             id="search"
@@ -138,6 +144,9 @@ export default function MainPage() {
             }}
             onBlur={() => {
               setSearchFocused((prev) => !prev);
+            }}
+            onChange={(e) => {
+              setSearchInput(e.target.value);
             }}
           />
         </div>
