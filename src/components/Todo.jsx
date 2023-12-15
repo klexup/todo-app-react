@@ -56,20 +56,6 @@ export default function Todo({ value, toggleCompleted }) {
     }
   };
 
-  const tagColors = [
-    "bg-yellow-200",
-    "bg-pink-200",
-    "bg-slate-200",
-    "bg-green-200",
-    "bg-purple-200",
-    "bg-sky-200",
-    "bg-indigo-200",
-    "bg-fuchsia-200",
-    "bg-rose-200",
-    "bg-teal-200",
-    "bg-amber-200",
-  ];
-
   const formattedDueDate = () => {
     let str = "";
     if (dueDate) {
@@ -101,6 +87,8 @@ export default function Todo({ value, toggleCompleted }) {
   };
 
   const percentageComplete = calculatePercentageComplete();
+
+  let tagColorIteration = 1;
 
   return (
     <div
@@ -288,7 +276,17 @@ export default function Todo({ value, toggleCompleted }) {
       </div>
       <div className="flex gap-2 overflow-hidden">
         {tags.map((value, index) => {
-          const color = tagColors[Math.floor(Math.random() * 11)];
+          let color = "";
+          if (tagColorIteration === 1) {
+            color = "bg-yellow-200";
+            tagColorIteration = 2;
+          } else if (tagColorIteration === 2) {
+            color = "bg-pink-200";
+            tagColorIteration = 3;
+          } else if (tagColorIteration === 3) {
+            color = "bg-teal-200";
+            tagColorIteration = 1;
+          }
           return (
             <div
               key={index}
