@@ -4,14 +4,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 export const TodoContext = createContext();
 
 export default function TodoProvider({ children }) {
-  const [
-    todos,
-    setTodos,
-    handleSubmitNewTask,
-    handleUpdateTask,
-    toggleCompleted,
-    handleDeleteTask,
-  ] = useLocalStorage("todos");
+  const [todos, setTodos] = useLocalStorage("todos");
 
   const [searchInput, setSearchInput] = useState("");
   const [tagFilter, setTagFilter] = useState(null);
@@ -103,6 +96,45 @@ export default function TodoProvider({ children }) {
         return todos;
     }
   }
+
+  const handleSubmitNewTask = (newTodo) => {
+    setTodos((prev) => {
+      const updatedArray = [...prev, newTodo];
+      setLocalStorage(storageName, updatedArray);
+      return updatedArray;
+    });
+  };
+
+  const handleUpdateTask = (updatedTodo) => {
+    setTodos((prev) => {
+      const prevCopy = prev.map((todo) =>
+        todo.id === updatedTodo.id ? updatedTodo : todo,
+      );
+      setLocalStorage(storageName, prevCopy);
+      return prevCopy;
+    });
+  };
+
+  const toggleCompleted = (id) => {
+    setTodos(() => {
+      const newArr = todos.map((value) => {
+        if (value.id === id) {
+          return { ...value, completed: !value.completed };
+        }
+        return value;
+      });
+      setLocalStorage(storageName, newArr);
+      return newArr;
+    });
+  };
+
+  const handleDeleteTask = (id) => {
+    setTodos(() => {
+      const updatedArr = todos.filter((value) => value.id !== id);
+      setLocalStorage(storageName, updatedArr);
+      return updatedArr;
+    });
+  };
 
   return (
     <>
