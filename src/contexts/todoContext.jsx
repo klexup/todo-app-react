@@ -4,7 +4,8 @@ import useLocalStorage from "../hooks/useLocalStorage";
 export const TodoContext = createContext();
 
 export default function TodoProvider({ children }) {
-  const [todos, setTodos] = useLocalStorage("todos");
+  const storageName = "todos";
+  const [todos, setTodos, setLocalStorage] = useLocalStorage(storageName);
 
   const [searchInput, setSearchInput] = useState("");
   const [tagFilter, setTagFilter] = useState(null);
