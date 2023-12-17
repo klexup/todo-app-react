@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function useLocalStorage(storageName) {
   const [todos, setTodos] = useState(() => {
@@ -9,9 +9,9 @@ export default function useLocalStorage(storageName) {
     return array;
   });
 
-  const setLocalStorage = (storageName, newValue) => {
-    localStorage.setItem(storageName, JSON.stringify(newValue));
-  };
+  useEffect(() => {
+    localStorage.setItem(storageName, JSON.stringify(todos));
+  }, [todos]);
 
-  return [todos, setTodos, setLocalStorage];
+  return [todos, setTodos];
 }

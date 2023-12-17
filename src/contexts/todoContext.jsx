@@ -5,33 +5,21 @@ export const TodoContext = createContext();
 
 export default function TodoProvider({ children }) {
   const storageName = "todos";
-  const [todos, setTodos, setLocalStorage] = useLocalStorage(storageName);
+  const [todos, setTodos] = useLocalStorage(storageName);
 
   const [searchInput, setSearchInput] = useState("");
   const [tagFilter, setTagFilter] = useState(null);
   const [filter, setFilter] = useState("default");
 
-  let allCurrentTags = [];
-  todos.forEach((element) => {
-    if (element.tags.length > 0) {
-      const tagArray = element.tags;
-      for (let value of tagArray) {
-        if (!allCurrentTags.includes(value)) {
-          allCurrentTags.push(value);
-        }
-      }
-    }
-  });
+  const allCurrentTags = [...new Set(todos.flatMap((value) => value.tags))];
 
-  let todosCopy = [...todos];
-  if (searchInput !== "") {
-    todosCopy = todosCopy.filter((value) =>
-      value.taskName.includes(searchInput),
-    );
-  }
-  if (tagFilter !== null) {
-    todosCopy = todosCopy.filter((value) => value.tags.includes(tagFilter));
-  }
+  const todosCopy = todos
+    .filter((value) => value.taskName.includes(searchInput))
+    .filter((value) => {
+      if (tagFilter === null) return value;
+      return value.tags.includes(tagFilter);
+    });
+
   function filterTodos() {
     switch (filter) {
       case "default":
@@ -100,40 +88,32 @@ export default function TodoProvider({ children }) {
 
   const handleSubmitNewTask = (newTodo) => {
     setTodos((prev) => {
-      const updatedArray = [...prev, newTodo];
-      setLocalStorage(storageName, updatedArray);
-      return updatedArray;
+      return [...prev, newTodo];
     });
   };
 
   const handleUpdateTask = (updatedTodo) => {
     setTodos((prev) => {
-      const prevCopy = prev.map((todo) =>
+      return prev.map((todo) =>
         todo.id === updatedTodo.id ? updatedTodo : todo,
       );
-      setLocalStorage(storageName, prevCopy);
-      return prevCopy;
     });
   };
 
   const toggleCompleted = (id) => {
     setTodos(() => {
-      const newArr = todos.map((value) => {
+      return todos.map((value) => {
         if (value.id === id) {
           return { ...value, completed: !value.completed };
         }
         return value;
       });
-      setLocalStorage(storageName, newArr);
-      return newArr;
     });
   };
 
   const handleDeleteTask = (id) => {
     setTodos(() => {
-      const updatedArr = todos.filter((value) => value.id !== id);
-      setLocalStorage(storageName, updatedArr);
-      return updatedArr;
+      return todos.filter((value) => value.id !== id);
     });
   };
 

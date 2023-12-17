@@ -7,12 +7,7 @@ import Todo from "../components/Todo";
 
 export default function MainPage() {
   const {
-    todos,
-    setTodos,
-    handleSubmitNewTask,
-    handleUpdateTask,
     toggleCompleted,
-    handleDeleteTask,
     filter,
     setFilter,
     tagFilter,
