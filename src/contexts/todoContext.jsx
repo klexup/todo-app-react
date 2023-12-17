@@ -124,6 +124,7 @@ export default function TodoProvider({ children }) {
     <>
       <TodoContext.Provider
         value={{
+          todos,
           todosCopy,
           setTodos,
           handleSubmitNewTask,
