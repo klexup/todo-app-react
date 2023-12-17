@@ -3,6 +3,72 @@ import useLocalStorage from "../hooks/useLocalStorage";
 
 export const TodoContext = createContext();
 
+function filterTodos(todosCopy, filter) {
+  switch (filter) {
+    case "default":
+      return todosCopy;
+    case "ascending-priority":
+      return todosCopy.sort((a, b) => {
+        const valueA = a.priorityLevel;
+        const valueB = b.priorityLevel;
+        if (valueA < valueB) {
+          return -1;
+        } else if (valueA > valueB) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    case "descending-priority":
+      return todosCopy.sort((a, b) => {
+        const valueA = a.priorityLevel;
+        const valueB = b.priorityLevel;
+        if (valueA < valueB) {
+          return 1;
+        } else if (valueA > valueB) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+    case "ascending-complexity":
+      return todosCopy.sort((a, b) => {
+        const valueA = a.complexityLevel;
+        const valueB = b.complexityLevel;
+        if (valueA < valueB) {
+          return -1;
+        } else if (valueA > valueB) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    case "descending-complexity":
+      return todosCopy.sort((a, b) => {
+        const valueA = a.complexityLevel;
+        const valueB = b.complexityLevel;
+        if (valueA < valueB) {
+          return 1;
+        } else if (valueA > valueB) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+    case "ascending-date":
+      return todosCopy.sort(
+        (a, b) => new Date(a.dueDate) - new Date(b.dueDate),
+      );
+    case "descending-date":
+      return todosCopy.sort((a, b) => {
+        return new Date(b.dueDate) - new Date(a.dueDate);
+      });
+
+    default:
+      return todos;
+  }
+}
+
 export default function TodoProvider({ children }) {
   const storageName = "todos";
   const [todos, setTodos] = useLocalStorage(storageName);
@@ -13,78 +79,15 @@ export default function TodoProvider({ children }) {
 
   const allCurrentTags = [...new Set(todos.flatMap((value) => value.tags))];
 
-  const todosCopy = todos
-    .filter((value) => value.taskName.includes(searchInput))
-    .filter((value) => {
-      if (tagFilter === null) return value;
-      return value.tags.includes(tagFilter);
-    });
-
-  function filterTodos() {
-    switch (filter) {
-      case "default":
-        return todosCopy;
-      case "ascending-priority":
-        return todosCopy.sort((a, b) => {
-          const valueA = a.priorityLevel;
-          const valueB = b.priorityLevel;
-          if (valueA < valueB) {
-            return -1;
-          } else if (valueA > valueB) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
-      case "descending-priority":
-        return todosCopy.sort((a, b) => {
-          const valueA = a.priorityLevel;
-          const valueB = b.priorityLevel;
-          if (valueA < valueB) {
-            return 1;
-          } else if (valueA > valueB) {
-            return -1;
-          } else {
-            return 0;
-          }
-        });
-      case "ascending-complexity":
-        return todosCopy.sort((a, b) => {
-          const valueA = a.complexityLevel;
-          const valueB = b.complexityLevel;
-          if (valueA < valueB) {
-            return -1;
-          } else if (valueA > valueB) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
-      case "descending-complexity":
-        return todosCopy.sort((a, b) => {
-          const valueA = a.complexityLevel;
-          const valueB = b.complexityLevel;
-          if (valueA < valueB) {
-            return 1;
-          } else if (valueA > valueB) {
-            return -1;
-          } else {
-            return 0;
-          }
-        });
-      case "ascending-date":
-        return todosCopy.sort(
-          (a, b) => new Date(a.dueDate) - new Date(b.dueDate),
-        );
-      case "descending-date":
-        return todosCopy.sort((a, b) => {
-          return new Date(b.dueDate) - new Date(a.dueDate);
-        });
-
-      default:
-        return todos;
-    }
-  }
+  const todosCopy = filterTodos(
+    todos
+      .filter((value) => value.taskName.includes(searchInput))
+      .filter((value) => {
+        if (tagFilter === null) return value;
+        return value.tags.includes(tagFilter);
+      }),
+    filter,
+  );
 
   const handleSubmitNewTask = (newTodo) => {
     setTodos((prev) => {
@@ -121,7 +124,7 @@ export default function TodoProvider({ children }) {
     <>
       <TodoContext.Provider
         value={{
-          todos,
+          todosCopy,
           setTodos,
           handleSubmitNewTask,
           handleUpdateTask,
@@ -134,7 +137,6 @@ export default function TodoProvider({ children }) {
           searchInput,
           setSearchInput,
           allCurrentTags,
-          filterTodos,
         }}
       >
         {children}
