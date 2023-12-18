@@ -3,7 +3,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 
 export const TodoContext = createContext();
 
-function filterTodos(todos, filter, tagFilter, searchInput) {
+function filterTodos(todos, sortOption, tagFilter, searchInput) {
   const todosCopy = todos
     .filter((value) => value.taskName.includes(searchInput))
     .filter((value) => {
@@ -11,7 +11,7 @@ function filterTodos(todos, filter, tagFilter, searchInput) {
       return value.tags.includes(tagFilter);
     });
 
-  switch (filter) {
+  switch (sortOption) {
     case "default":
       return todosCopy;
     case "ascending-priority":
@@ -82,7 +82,7 @@ export default function TodoProvider({ children }) {
 
   const [searchInput, setSearchInput] = useState("");
   const [tagFilter, setTagFilter] = useState(null);
-  const [filter, setFilter] = useState("default");
+  const [sortOption, setSortOption] = useState("default");
 
   const allCurrentTags = [...new Set(todos.flatMap((value) => value.tags))];
 
@@ -126,8 +126,8 @@ export default function TodoProvider({ children }) {
           handleUpdateTask,
           toggleCompleted,
           handleDeleteTask,
-          filter,
-          setFilter,
+          sortOption,
+          setSortOption,
           tagFilter,
           setTagFilter,
           searchInput,

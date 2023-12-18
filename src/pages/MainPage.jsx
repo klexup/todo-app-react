@@ -110,17 +110,15 @@ export default function MainPage() {
         />
       </div>
       <div className="mb-5">
-        {filterTodos(todos, filter, tagFilter, searchInput).map(
-          (value, index) => {
-            return (
-              <Todo
-                value={value}
-                key={index}
-                toggleCompleted={toggleCompleted}
-              />
-            );
-          },
-        )}
+        {filterTodos(todos, filter, tagFilter, searchInput).map((value) => {
+          return (
+            <Todo
+              key={value.id}
+              value={value}
+              toggleCompleted={toggleCompleted}
+            />
+          );
+        })}
       </div>
 
       <Link
