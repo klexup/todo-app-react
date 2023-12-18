@@ -3,7 +3,14 @@ import useLocalStorage from "../hooks/useLocalStorage";
 
 export const TodoContext = createContext();
 
-function filterTodos(todosCopy, filter) {
+function filterTodos(todos, filter, tagFilter, searchInput) {
+  const todosCopy = todos
+    .filter((value) => value.taskName.includes(searchInput))
+    .filter((value) => {
+      if (tagFilter === null) return value;
+      return value.tags.includes(tagFilter);
+    });
+
   switch (filter) {
     case "default":
       return todosCopy;
@@ -79,16 +86,6 @@ export default function TodoProvider({ children }) {
 
   const allCurrentTags = [...new Set(todos.flatMap((value) => value.tags))];
 
-  const todosCopy = filterTodos(
-    todos
-      .filter((value) => value.taskName.includes(searchInput))
-      .filter((value) => {
-        if (tagFilter === null) return value;
-        return value.tags.includes(tagFilter);
-      }),
-    filter,
-  );
-
   const handleSubmitNewTask = (newTodo) => {
     setTodos((prev) => {
       return [...prev, newTodo];
@@ -125,8 +122,6 @@ export default function TodoProvider({ children }) {
       <TodoContext.Provider
         value={{
           todos,
-          todosCopy,
-          setTodos,
           handleSubmitNewTask,
           handleUpdateTask,
           toggleCompleted,
@@ -138,6 +133,7 @@ export default function TodoProvider({ children }) {
           searchInput,
           setSearchInput,
           allCurrentTags,
+          filterTodos,
         }}
       >
         {children}

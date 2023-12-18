@@ -5,7 +5,8 @@ import { TodoContext } from "../contexts/todoContext";
 import SubtaskChecklist from "../components/SubtaskChecklist";
 
 export default function ViewTodoPage() {
-  const { todos, handleDeleteTask } = useContext(TodoContext);
+  const { todos, handleDeleteTask, filterTodos, filter, tagFilter } =
+    useContext(TodoContext);
   const { todoId } = useParams();
   const navigate = useNavigate();
 

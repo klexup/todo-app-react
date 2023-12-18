@@ -15,7 +15,8 @@ export default function MainPage() {
     searchInput,
     setSearchInput,
     allCurrentTags,
-    todosCopy,
+    filterTodos,
+    todos,
   } = useContext(TodoContext);
 
   const [searchFocused, setSearchFocused] = useState(false);
@@ -109,11 +110,17 @@ export default function MainPage() {
         />
       </div>
       <div className="mb-5">
-        {todosCopy.map((value, index) => {
-          return (
-            <Todo value={value} key={index} toggleCompleted={toggleCompleted} />
-          );
-        })}
+        {filterTodos(todos, filter, tagFilter, searchInput).map(
+          (value, index) => {
+            return (
+              <Todo
+                value={value}
+                key={index}
+                toggleCompleted={toggleCompleted}
+              />
+            );
+          },
+        )}
       </div>
 
       <Link
