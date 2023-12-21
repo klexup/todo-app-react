@@ -1,6 +1,5 @@
 import React from "react";
 import ProgressRing from "./ProgressRing";
-import { useNavigate } from "react-router-dom";
 
 export default function ViewPageTodo({ value }) {
   const {
@@ -10,11 +9,8 @@ export default function ViewPageTodo({ value }) {
     dueDate,
     dueTime,
     subTasks,
-    tags,
-    id,
     completed,
   } = value;
-  const navigate = useNavigate();
 
   const getPriorityColor = () => {
     if (priorityLevel <= 3) {
